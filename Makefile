@@ -3,6 +3,8 @@ DEPLOY_RUNTIME ?= /disks/patric-common/runtime
 TARGET ?= /tmp/deployment
 include $(TOP_DIR)/tools/Makefile.common
 
+APP_SERVICE = app_service
+
 SERVICE_SPEC = 
 SERVICE_NAME = p3_mauve
 SERVICE_DIR  = $(SERVICE_NAME)
