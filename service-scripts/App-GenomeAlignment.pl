@@ -28,7 +28,7 @@ sub preflight_cb
 {
     my($app, $app_def, $raw_params, $params) = @_;
 
-    my $time = 60 * 60 * 2;
+    my $time = 60 * 60 * 8;
 
     my $pf = {
 	cpu => 1,
