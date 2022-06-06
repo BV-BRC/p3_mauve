@@ -8,6 +8,10 @@ SERVICE_NAME = p3_mauve
 SERVICE_DIR  = $(SERVICE_NAME)
 SERVICE_APP_DIR      = $(TARGET)/lib/$(SERVICE_NAME)
 
+SRC_SERVICE_PERL = $(wildcard service-scripts/*.pl)
+BIN_SERVICE_PERL = $(addprefix $(BIN_DIR)/,$(basename $(notdir $(SRC_SERVICE_PERL))))
+DEPLOY_SERVICE_PERL = $(addprefix $(SERVICE_DIR)/bin/,$(basename $(notdir $(SRC_SERVICE_PERL))))
+
 APP_DIR = .
 APP_COMPONENTS = node_modules scripts
 
@@ -54,8 +58,23 @@ deploy-all: deploy-client deploy-service
 
 deploy-client: deploy-app deploy-nodejs-scripts
 
-deploy-service: 
+deploy-service: deploy-scripts deploy-service-scripts deploy-specs
 
+deploy-service-scripts:
+	export KB_TOP=$(TARGET); \
+	export KB_RUNTIME=$(DEPLOY_RUNTIME); \
+	export KB_PERL_PATH=$(TARGET)/lib ; \
+	for src in $(SRC_SERVICE_PERL) ; do \
+	        basefile=`basename $$src`; \
+	        base=`basename $$src .pl`; \
+	        echo install $$src $$base ; \
+	        cp $$src $(TARGET)/plbin ; \
+	        $(WRAP_PERL_SCRIPT) "$(TARGET)/plbin/$$basefile" $(TARGET)/bin/$$base ; \
+	done
+
+deploy-specs:
+	mkdir -p $(TARGET)/services/$(APP_SERVICE)
+	rsync -arv app_specs $(TARGET)/services/$(APP_SERVICE)/.
 deploy-app: build-app 
 	-mkdir $(SERVICE_APP_DIR)
 	cd $(APP_DIR); rsync --delete -ar $(APP_COMPONENTS) $(SERVICE_APP_DIR)
