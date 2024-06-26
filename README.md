@@ -1,49 +1,32 @@
-# p3_mauve
+# Genome Annotation
 
-Takes JSON and runs Mauve with provided options.
+## Overview
+The bacterial Genome Alignment Service uses progressiveMauve to produce a whole genome alignment of two or more genomes. The resulting alignment can be visualized within the BV-BRC website, providing insight into homologous regions and changes due to DNA recombination. It should be noted that this service is currently released as beta. As always, we appreciate your feedback.
 
+## About this module
 
-## Requirements
+This module is a component of the BV-BRC build system. It is designed to fit into the
+`dev_container` infrastructure which manages development and production deployment of
+the components of the BV-BRC. More documentation is available [here](https://github.com/BV-BRC/dev_container/tree/master/README.md).
 
-- node (8.9.1+)
-- npm (5.6.0+)
+There is one application service specification defined here:
 
-## Installation
+1.  [GenomeAlignment](app_specs/GenomeAlignment.md): Service that that provides the backend for the BV-BRC web inerface; it takes genomes as input.
 
-```
-cd p3_mauve
-npm install
-```
-
-
-## Usage
+The code in this module provides the BV-BRC application service wrapper scripts for the genome annotation service as well
+as some backend utilities:
 
 
-```
-  Usage: p3-mauve [options]
+| Script name | Purpose |
+| ----------- | ------- |
+| [App-GenomeAlignment.pl](service-scripts/App-GenomeAlignment.pl) | App script for the [Genome Alignment Service](https://www.bv-brc.org/docs/tutorial/genome_alignment/genome_alignment.html) |
 
-  Options:
 
-    --jfile [value]                Pass job params (json) as file
-    --sstring [value]              Server config (json) as string
-    -o, --output [value]           Where to save files/results
-```
+## See also
 
-Example:
+* [Genome Alignment (Mauve) Service](https://www.bv-brc.org/app/GenomeAlignment)
+* [Quick Reference](https://www.bv-brc.org/docs/quick_references/services/genome_alignment_service.html)
+* [Genome Annotation Service Tutorial](https://www.bv-brc.org/docs/tutorial/genome_alignment/genome_alignment.html)
 
-```
-p3-mauve \
-    --jfile jobdesc.json \
-    --sstring '{"data_api":"<end_point>"}' \
-    -o test-data/
-
- ```
-
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request
-
+## References
+Darling, A.E., B. Mau, and N.T. Perna, progressiveMauve: multiple genome alignment with gene gain, loss and rearrangement. PloS one, 2010. 5(6): p. e11147.
