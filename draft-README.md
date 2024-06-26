@@ -18,6 +18,7 @@ This module provides the following application specfication(s):
 
 ## See also
 
+* [Genome Alignment Service Quick Reference](https://www.bv-brc.org/docs/quick_references/services/genome_alignment_service.html)
 * [Genome Alignment Service](https://www.bv-brc.org/docs/https://bv-brc.org/app/GenomeAlignment.html)
 
 
