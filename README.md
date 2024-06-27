@@ -1,4 +1,4 @@
-# Genome Annotation
+# Genome Alignment (Mauve)
 
 ## Overview
 The bacterial Genome Alignment Service uses progressiveMauve to produce a whole genome alignment of two or more genomes. The resulting alignment can be visualized within the BV-BRC website, providing insight into homologous regions and changes due to DNA recombination. It should be noted that this service is currently released as beta. As always, we appreciate your feedback.
