@@ -3,17 +3,23 @@ DEPLOY_RUNTIME ?= /disks/patric-common/runtime
 TARGET ?= /tmp/deployment
 include $(TOP_DIR)/tools/Makefile.common
 
+APP_SERVICE = app_service
+
 SERVICE_SPEC = 
 SERVICE_NAME = p3_mauve
 SERVICE_DIR  = $(SERVICE_NAME)
 SERVICE_APP_DIR      = $(TARGET)/lib/$(SERVICE_NAME)
 
+SRC_SERVICE_PERL = $(wildcard service-scripts/*.pl)
+BIN_SERVICE_PERL = $(addprefix $(BIN_DIR)/,$(basename $(notdir $(SRC_SERVICE_PERL))))
+DEPLOY_SERVICE_PERL = $(addprefix $(SERVICE_DIR)/bin/,$(basename $(notdir $(SRC_SERVICE_PERL))))
+
 APP_DIR = .
 APP_COMPONENTS = node_modules scripts
 
 PATH := $(DEPLOY_RUNTIME)/build-tools/bin:$(PATH)
-NPM = $(DEPLOY_RUNTIME)/bin/npm-v8
-NODE = $(DEPLOY_RUNTIME)/bin/node-v8
+NODE = $(DEPLOY_RUNTIME)/bin/node-v12
+NPM = $(NODE) $(DEPLOY_RUNTIME)/bin/npm-v12
 export NODE
 
 DATA_API_URL = https://p3.theseed.org/services/data_api
@@ -54,7 +60,7 @@ deploy-all: deploy-client deploy-service
 
 deploy-client: deploy-app deploy-nodejs-scripts
 
-deploy-service: 
+deploy-service: deploy-scripts deploy-service-scripts deploy-specs
 
 deploy-app: build-app 
 	-mkdir $(SERVICE_APP_DIR)
